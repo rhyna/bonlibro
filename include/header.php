@@ -43,7 +43,7 @@
                     <a href="<?= $ROOT_URL ?>/" class="nav-link">Главная</a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= $ROOT_URL ?>/admin/" class="nav-link">Админ-панель</a>
+                    <a href="<?= $ROOT_URL ?>/admin/?page=1" class="nav-link">Админ-панель</a>
                 </li>
                 <li class="nav-item">
                     <a href="<?= $ROOT_URL ?>/logout.php" class="nav-link">Выйти</a>

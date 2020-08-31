@@ -8,7 +8,7 @@ require_once 'include/header.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (User::authenticate($conn, $_POST['username'], $_POST['password'])) {
         Auth::login();
-        Url::redirect($ROOT_URL . '/admin/');
+        Url::redirect($ROOT_URL . '/admin/?page=1');
     } else {
         echo 'Авторизоваться не удалось. Проверьте логин и пароль';
         exit;

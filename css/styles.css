@@ -354,17 +354,17 @@ header .contacts-text {
   display: flex;
   justify-content: center;
 }
-.categorypage .pagination-container,
-.discountpage .pagination-container {
+.pagination-container {
   margin-top: 60px;
 }
-.categorypage .pagination-link,
-.discountpage .pagination-link {
+.pagination-link {
   color: #666;
 }
-.categorypage .pagination-link.active,
-.discountpage .pagination-link.active {
+.pagination-link.active {
   color: #FA8B0E;
+}
+.admin-page .pagination {
+  justify-content: center;
 }
 footer {
   margin-top: 60px;

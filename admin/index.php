@@ -6,7 +6,18 @@ Auth::ifNotLoggedIn();
 
 $conn = require_once '../include/db.php';
 
-$books = Book::getAllBooks($conn);
+$totalBooks = Book::getTotalOfBooks($conn);
+
+$token = '?';
+
+if (!isset($_GET['page'])) {
+    $_GET['page'] = 1;
+}
+
+$paginator = new Paginator($_GET['page'], 10, $totalBooks);
+
+$books = Book::getAdminPage($conn, $paginator->limit, $paginator->offset);
+
 
 require_once '../include/header.php';
 
@@ -29,17 +40,17 @@ require_once '../include/header.php';
                     <div class="row">
                         <div class="col-9">
                             <div class="admin-books-item__title">
-                                <a href="<?= $ROOT_URL ?>/book.php?id=<?= $book['id'] ?>">
-                                    <?= $book['name'] ?>
+                                <a href="<?= $ROOT_URL ?>/book.php?id=<?= $book->id ?>">
+                                    <?= $book->name ?>
                                 </a>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="admin-books-item__setnumber"><?= $book['set_number'] ?></div>
+                            <div class="admin-books-item__setnumber"><?= $book->set_number ?></div>
                         </div>
                         <div class="col">
                             <div class="admin-books-item__edit">
-                                <a href="<?= $ROOT_URL ?>/admin/edit-book.php?id=<?= $book['id'] ?>">
+                                <a href="<?= $ROOT_URL ?>/admin/edit-book.php?id=<?= $book->id ?>">
                                     <i class="far fa-edit"></i>
                                 </a>
                             </div>
@@ -47,7 +58,7 @@ require_once '../include/header.php';
                         <div class="col">
                             <div class="admin-books-item__delete">
                                 <button type="button" data-toggle="modal"
-                                        data-target="#exampleModal" data-id="<?= $book['id'] ?>" style="background: none">
+                                        data-target="#exampleModal" data-id="<?= $book->id ?>" style="background: none">
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>
@@ -56,6 +67,7 @@ require_once '../include/header.php';
                 </div>
             <?php endforeach; ?>
         </div>
+        <?php include_once '../include/pagination.php' ?>
     </div>
 </div>
 
