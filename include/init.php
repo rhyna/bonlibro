@@ -1,6 +1,6 @@
 <?php
 $ROOT = __DIR__ . '/../'; // корень проекта
-$ROOT_URL = '/Bonlibro';
+$ROOT_URL = '';
 
 spl_autoload_register(function ($class) use ($ROOT) {
     require_once $ROOT . "/class/{$class}.php";

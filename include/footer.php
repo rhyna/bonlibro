@@ -62,7 +62,7 @@
             crossorigin="anonymous">
     </script>
     <script src="<?= $ROOT_URL ?>/js/script.js"></script>
-    </body>
-    </html>
 </footer>
+</body>
+</html>
 
