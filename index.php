@@ -12,6 +12,7 @@ $bestsellerBooks = Book::getBestsellerBooks($conn);
 $discountBooks = Book::getDiscountBooks($conn);
 
 ?>
+
 <div class="main-content mainpage">
     <div class="container">
         <div class="row">

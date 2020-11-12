@@ -6,6 +6,7 @@ if ($mode === 'edit-book') {
 if ($mode === 'add-book') {
     $classMode = 'add';
 }
+
 ?>
 
 <?php if ($book->errors): ?>

@@ -4,7 +4,7 @@ $('.edit-book-delete-image-button').on('click', function (e) {
     let button = $(this);
 
     $.ajax({
-        url: '/Bonlibro/admin/delete-book-image.php',
+        url: '/admin/delete-book-image.php',
         type: 'POST',
         data: {id: bookId},
     })

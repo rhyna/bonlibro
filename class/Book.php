@@ -191,7 +191,7 @@ class Book
         }
 
         if ($this->set_number && !$this->id) {
-            if (self::checkSetNumberDuplicates($conn)) {
+            if ($this->checkSetNumberDuplicates($conn)) {
                 $this->errors[] = 'Книга с таким артикулом уже существует';
             }
         }

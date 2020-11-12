@@ -1,56 +1,56 @@
 <?php
 
 if ($_FILES['image']['name'] != '') {
-        $extensions = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
-        $imageErrors = [];
+    $extensions = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
+    $imageErrors = [];
 
-        try {
-            $errorMessages = [];
+    try {
+        $errorMessages = [];
 
-            if ($_FILES['image']['size'] > 1000000) {
-                $errorMessages[] = 'Слишком большой файл, максимум 1 Мб';
-            }
-
-            if (!in_array($_FILES['image']['type'], $extensions)) {
-                $errorMessages[] = 'Файл не является картинкой, допустимые расширения: png, jpeg, jpg, gif';
-            }
-
-            if ($errorMessages) {
-                $errorMessage = implode('<br>', $errorMessages);
-                throw new Exception($errorMessage);
-            }
-
-        } catch (Exception $e) {
-            $imageErrors = $e->getMessage();
-            $imageErrors = explode('<br>', $imageErrors);
-            $book->imageErrors = $imageErrors;
+        if ($_FILES['image']['size'] > 1000000) {
+            $errorMessages[] = 'Слишком большой файл, максимум 1 Мб';
         }
 
-        if (!$book->imageErrors && !$book->errors) {
-            $pathInfo = pathinfo($_FILES['image']['name']);
+        if (!in_array($_FILES['image']['type'], $extensions)) {
+            $errorMessages[] = 'Файл не является картинкой, допустимые расширения: png, jpeg, jpg, gif';
+        }
 
-            $base = $pathInfo['filename'];
+        if ($errorMessages) {
+            $errorMessage = implode('<br>', $errorMessages);
+            throw new Exception($errorMessage);
+        }
 
-            $base = preg_replace('/[^a-zA-Z0-9_-]/', '_', $base); // all except a-z, A-Z, 0-9, _, -
+    } catch (Exception $e) {
+        $imageErrors = $e->getMessage();
+        $imageErrors = explode('<br>', $imageErrors);
+        $book->imageErrors = $imageErrors;
+    }
 
-            $fileName = $base . '.' . $pathInfo['extension'];
+    if (!$book->imageErrors && !$book->errors) {
+        $pathInfo = pathinfo($_FILES['image']['name']);
 
-            $imageUploadDestination = '/upload/books-images/' . $fileName;
+        $base = $pathInfo['filename'];
 
-            for ($i = 1; file_exists($ROOT . $imageUploadDestination); $i++) {
-                $imageUploadDestination = '/upload/books-images/' . $base . '-' . $i . '.' . $pathInfo['extension'];
-            }
+        $base = preg_replace('/[^a-zA-Z0-9_-]/', '_', $base); // all except a-z, A-Z, 0-9, _, -
 
-            move_uploaded_file($_FILES['image']['tmp_name'], $ROOT . $imageUploadDestination);
+        $fileName = $base . '.' . $pathInfo['extension'];
 
-            $previousImage = $book->image;
+        $imageUploadDestination = '/upload/books-images/' . $fileName;
 
-            $book->image = $imageUploadDestination;
+        for ($i = 1; file_exists($ROOT . $imageUploadDestination); $i++) {
+            $imageUploadDestination = '/upload/books-images/' . $base . '-' . $i . '.' . $pathInfo['extension'];
+        }
 
-            if ($book->setBookImage($conn, $imageUploadDestination)) {
-                if ($previousImage) {
-                    unlink($ROOT . $previousImage);
-                }
+        move_uploaded_file($_FILES['image']['tmp_name'], $ROOT . $imageUploadDestination);
+
+        $previousImage = $book->image;
+
+        $book->image = $imageUploadDestination;
+
+        if ($book->setBookImage($conn, $imageUploadDestination)) {
+            if ($previousImage) {
+                unlink($ROOT . $previousImage);
             }
         }
     }
+}
